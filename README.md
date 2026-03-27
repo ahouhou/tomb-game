@@ -2,11 +2,12 @@
 
 > 根据南派三叔《盗墓笔记》改编 | 第三人称探险解谜 + 轻度恐怖
 
+**GitHub**: https://github.com/ahouhou/tomb-game
+
 ---
 
 <p align="center">
-  <img src="game_screenshots/01_main_menu.png" width="100%" alt="主菜单"/>
-  <img src="game_screenshots/06_game_ui.png" width="100%" alt="游戏界面"/>
+  <img src="https://raw.githubusercontent.com/ahouhou/tomb-game/main/game_screenshots/01_main_menu.png" width="100%" alt="主菜单"/>
 </p>
 
 ---
@@ -35,6 +36,38 @@
 | `鼠标左键` | 谜题交互 |
 | `H` | 显示/隐藏提示 |
 | `ESC` | 暂停 |
+
+---
+
+## 🎨 游戏截图
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ahouhou/tomb-game/main/game_screenshots/02_character_showcase.png" width="100%" alt="角色展示"/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ahouhou/tomb-game/main/game_screenshots/03_monster_showcase.png" width="100%" alt="怪物图鉴"/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ahouhou/tomb-game/main/game_screenshots/04_particle_effects.png" width="100%" alt="粒子特效"/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ahouhou/tomb-game/main/game_screenshots/05_level_scenes.png" width="100%" alt="关卡场景"/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ahouhou/tomb-game/main/game_screenshots/06_game_ui.png" width="100%" alt="游戏UI"/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ahouhou/tomb-game/main/game_screenshots/07_puzzle_system.png" width="100%" alt="谜题系统"/>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ahouhou/tomb-game/main/game_screenshots/08_atmosphere.png" width="100%" alt="氛围场景"/>
+</p>
 
 ---
 
@@ -87,10 +120,11 @@
 
 - **程序化美术资源** — 所有图片（PIL）程序生成，无须外部美术文件
 - **动态动画系统** — 行走/呼吸/尘土粒子/阴影，全部实时渲染
-- **粒子特效引擎** — 5种粒子类型（尘土/血腥/火焰/魔法/骨骼）
+- **粒子特效引擎** — 5种粒子类型（尘土/血腥/火焰/魔法/骨骼碎片）
 - **手电筒光锥** — 跟随角色方向，营造黑灯瞎火的真实氛围
 - **全局暗色遮罩** — 极限沉浸感
 - **屏幕震动** — 踩陷阱/击杀时触发
+- **跨平台中文字体** — 自动适配 macOS/Windows/Linux
 - **Pygame 2.6** — 高性能双缓冲渲染
 
 ---
@@ -98,10 +132,7 @@
 ## 🛠️ 安装运行
 
 ```bash
-# Python 3.8+
 pip install pygame pillow numpy
-
-# 运行游戏
 cd ~/tomb-game
 python3 main.py
 ```
@@ -113,36 +144,17 @@ python3 main.py
 ```
 tomb-game/
 ├── main.py                    # 主程序入口
+├── README.md                  # 项目说明
 ├── src/
-│   ├── config.py              # 全局配置（窗口/颜色/参数）
-│   ├── animator.py            # 动态渲染系统（角色/怪物）
+│   ├── config.py              # 全局配置 + 中文字体系统
+│   ├── animator.py            # 动态渲染系统（角色/怪物/粒子）
 │   ├── entities.py            # 实体系统（玩家/怪物/粒子）
 │   ├── puzzle_system.py       # 谜题交互（6种谜题）
 │   ├── level_data.py          # 关卡数据（6关）
 │   └── resources.py           # 美术资源生成器
-├── assets/images/
-│   ├── backgrounds/            # 6张关卡背景
-│   ├── characters/            # 角色立绘
-│   ├── monsters/              # 怪物图鉴
-│   ├── items/                 # 道具图标
-│   └── ui/                   # UI元素
-└── game_screenshots/          # 测试效果图
+├── assets/images/             # 美术资源（程序生成）
+└── game_screenshots/           # 测试效果图
 ```
-
----
-
-## 🎨 测试效果图
-
-| 截图 | 内容 |
-|:---|:---|
-| `01_main_menu.png` | 游戏主菜单 |
-| `02_character_showcase.png` | 角色展示（吴邪/胖子/张起灵） |
-| `03_monster_showcase.png` | 怪物图鉴（禁婆/粽子/墓蛛/幽魂） |
-| `04_particle_effects.png` | 粒子特效（5种类型） |
-| `05_level_scenes.png` | 六大关卡场景 |
-| `06_game_ui.png` | 完整游戏UI界面 |
-| `07_puzzle_system.png` | 六大谜题系统 |
-| `08_atmosphere.png` | 沉浸式墓室氛围 |
 
 ---
 

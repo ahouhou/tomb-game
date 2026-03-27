@@ -261,17 +261,17 @@ class PuzzleManager:
         pygame.draw.circle(surface, border, (x, y), r, 3)
         if lit:
             pygame.draw.circle(surface, (255,220,100), (x, y), r-5)
-        font = pygame.font.SysFont("SimSun", 28)
+        font = F(28)
         txt = font.render(symbol, True, (40,30,15))
         rect = txt.get_rect(center=(x, y))
         surface.blit(txt, rect)
 
     def _draw_door_lock(self, surface):
         # 标题
-        font_title = pygame.font.SysFont("SimHei", 26, bold=True)
+        font_title = F(26, True)
         title = font_title.render(self.puzzle["title"], True, (220,180,80))
         surface.blit(title, (SCREEN_WIDTH//2 - title.get_width()//2, 120))
-        desc = pygame.font.SysFont("SimHei", 16).render(self.puzzle["description"], True, (180,160,120))
+        desc = F(16).render(self.puzzle["description"], True, (180,160,120))
         surface.blit(desc, (SCREEN_WIDTH//2 - desc.get_width()//2, 160))
         for el in self.elements:
             self._draw_symbol_btn(surface, el["x"], el["y"], el["symbol"], el["lit"])
@@ -288,16 +288,16 @@ class PuzzleManager:
                 pygame.draw.rect(surface, (50,40,25), [x, y, w, h], 2)
                 # 数字
                 idx = self.elements.index(el)
-                font = pygame.font.SysFont("Arial", 14)
+                font = F(14)
                 txt = font.render(str(idx+1), True, (255,220,180))
                 surface.blit(txt, (x+w//2-5, y+h//2-8))
 
     def _draw_star_lantern(self, surface):
         # 标题
-        font_title = pygame.font.SysFont("SimHei", 24, bold=True)
+        font_title = F(24, True)
         title = font_title.render(self.puzzle["title"], True, (220,180,80))
         surface.blit(title, (SCREEN_WIDTH//2 - title.get_width()//2, 40))
-        desc = pygame.font.SysFont("SimHei", 14).render(
+        desc = F(14).render(
             f"已点燃: {len(self.selected)}/7", True, (200,170,100))
         surface.blit(desc, (SCREEN_WIDTH//2 - desc.get_width()//2, 75))
         for el in self.elements:
@@ -315,14 +315,14 @@ class PuzzleManager:
                         py = y + int(math.sin(rad) * 32)
                         pygame.draw.line(surface, (255,220,100), (x, y), (px, py), 2)
                 if el["hover"]:
-                    font = pygame.font.SysFont("SimHei", 12)
+                    font = F(12)
                     txt = font.render(el["name"], True, (220,190,100))
                     surface.blit(txt, (x - txt.get_width()//2, y - 45))
                     star_txt = font.render(f"第{el['star']}星", True, (180,150,80))
                     surface.blit(star_txt, (x - star_txt.get_width()//2, y + 30))
 
     def _draw_fengshui(self, surface):
-        font_title = pygame.font.SysFont("SimHei", 22, bold=True)
+        font_title = F(22, True)
         title = font_title.render(self.puzzle["title"], True, (220,180,80))
         surface.blit(title, (SCREEN_WIDTH//2 - title.get_width()//2, 80))
         for el in self.elements:
@@ -332,12 +332,12 @@ class PuzzleManager:
                 border = (180,140,50) if el["lit"] else (80,65,35)
                 pygame.draw.rect(surface, color, [x, y, w, h])
                 pygame.draw.rect(surface, border, [x, y, w, h], 3)
-                font = pygame.font.SysFont("SimHei", 30, bold=True)
+                font = F(30, True)
                 txt = font.render(str(el["num"]), True, (40,30,15))
                 surface.blit(txt, (x + w//2 - txt.get_width()//2, y + h//2 - txt.get_height()//2))
 
     def _draw_relic(self, surface):
-        font_title = pygame.font.SysFont("SimHei", 22, bold=True)
+        font_title = F(22, True)
         title = font_title.render("明器鉴定台", True, (220,180,80))
         surface.blit(title, (SCREEN_WIDTH//2 - title.get_width()//2, 80))
         for el in self.elements:
@@ -348,7 +348,7 @@ class PuzzleManager:
                 if el["examined"]:
                     col = (80,200,80) if not el["cursed"] else (200,50,50)
                     status = "安全" if not el["cursed"] else "⚠ 诅咒"
-                    font = pygame.font.SysFont("SimHei", 12, bold=True)
+                    font = F(12, True)
                     txt = font.render(status, True, col)
                     surface.blit(txt, (x - txt.get_width()//2, y + 20))
 
@@ -357,10 +357,10 @@ class PuzzleManager:
         remaining = self.escape_timer
         sec = remaining // FPS
         color = (80,220,80) if sec > 20 else (220,80,80) if sec > 10 else (255,50,50)
-        font = pygame.font.SysFont("Arial", 48, bold=True)
+        font = F(48, True)
         txt = font.render(f"{sec}", True, color)
         surface.blit(txt, (SCREEN_WIDTH//2 - txt.get_width()//2, SCREEN_HEIGHT//2 - 60))
-        label = pygame.font.SysFont("SimHei", 18).render("秒内逃出墓穴！", True, (200,170,100))
+        label = F(18).render("秒内逃出墓穴！", True, (200,170,100))
         surface.blit(label, (SCREEN_WIDTH//2 - label.get_width()//2, SCREEN_HEIGHT//2))
         # 进度条
         bw = 400
@@ -373,7 +373,7 @@ class PuzzleManager:
         pass
 
     def _draw_message(self, surface):
-        font = pygame.font.SysFont("SimHei", 20)
+        font = F(20)
         txt = font.render(self.message, True, (220,180,80))
         x = SCREEN_WIDTH//2 - txt.get_width()//2
         y = SCREEN_HEIGHT - 180
@@ -392,6 +392,6 @@ class PuzzleManager:
         y = HINT_BOX_Y
         pygame.draw.rect(surface, (8,6,4,180), [x-10, y-5, txt.get_width()+20, 32], border_radius=6)
         surface.blit(txt, (x, y))
-        small = pygame.font.SysFont("SimHei", 11)
+        small = F(11)
         tip = small.render("[ 按 H 键隐藏提示 ]", True, (100,85,60))
         surface.blit(tip, (x + txt.get_width() - 120, y + 35))

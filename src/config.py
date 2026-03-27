@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """游戏全局配置"""
-import os
+import os, sys
 
 # ============ 项目路径 ============
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -124,3 +124,48 @@ TOOLS = [
     {"id": "rope", "name": "捆尸索", "desc": "攀爬与牵引", "icon_key": "rope"},
     {"id": "herb", "name": "避毒草药", "desc": "暂时抵御毒气", "icon_key": "herb"},
 ]
+
+
+# ============ 中文字体自动设置（macOS/Windows/Linux 兼容）============
+
+FONT_PATH = None
+# macOS 中文字体
+for _fp in [
+    "/System/Library/Fonts/Hiragino Sans GB.ttc",
+    "/System/Library/Fonts/STHeiti Medium.ttc",
+    "/Library/Fonts/Arial Unicode.ttf",
+]:
+    if os.path.exists(_fp):
+        FONT_PATH = _fp
+        break
+
+# 备用：空，让 pygame 找系统字体
+if FONT_PATH:
+    os.environ['SDL_HINT_VIDEO_FONTS'] = FONT_PATH
+
+def _font(size, bold=False):
+    """获取中文字体（全局单例）"""
+    import pygame as _pg
+    key = (size, bold)
+    if key not in _font._cache:
+        if FONT_PATH and os.path.exists(FONT_PATH):
+            _f = _pg.font.Font(FONT_PATH, size)
+        else:
+            # 依次尝试各平台字体名
+            _names = ["Hiragino Sans GB","STHeiti","PingFang SC","Microsoft YaHei","SimHei","SimSun","WenQuanYi Micro Hei"]
+            _f = None
+            for _n in _names:
+                try:
+                    _f = _pg.font.SysFont(_n, size, bold=bold)
+                    break
+                except: pass
+            if _f is None:
+                _f = _pg.font.Font(None, size)
+                if bold: _f.set_bold(True)
+        _font._cache[key] = _f
+    return _font._cache[key]
+_font._cache = {}
+
+def F(size, bold=False):
+    """快捷字体函数（等同于 _font）"""
+    return _font(size, bold)

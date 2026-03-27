@@ -299,7 +299,7 @@ class Player:
                 particles.emit(fx, fy, count=2, ptype="dust", spread=6)
 
     def draw_ui(self, surface):
-        font = pygame.font.SysFont("SimHei", 13, bold=True)
+        font = F(13, True)
         # 血条
         pygame.draw.rect(surface, (30,20,20), [HEALTH_BAR_X, HEALTH_BAR_Y, HEALTH_BAR_WIDTH, HEALTH_BAR_HEIGHT])
         w = int((self.health / self.max_health) * (HEALTH_BAR_WIDTH - 4))
@@ -316,7 +316,7 @@ class Player:
             pygame.draw.rect(surface, (20,18,15), [bar_x, bar_y, bar_w, 14], border_radius=5)
             pw = int((self.search_progress/100)*(bar_w-4))
             pygame.draw.rect(surface, (200,170,60), [bar_x+2, bar_y+2, pw, 10], border_radius=4)
-            font2 = pygame.font.SysFont("SimHei", 12)
+            font2 = F(12)
             txt2 = font2.render("搜索中...", True, (220,190,100))
             surface.blit(txt2, (bar_x + bar_w//2 - 30, bar_y - 18))
         # 道具栏
@@ -327,14 +327,14 @@ class Player:
             icon_s = pygame.Surface((10,10), pygame.SRCALPHA)
             pygame.draw.circle(icon_s, col, (5,5), 5)
             surface.blit(icon_s, (HEALTH_BAR_X, HEALTH_BAR_Y - 14))
-            lbl = pygame.font.SysFont("SimHei", 10).render("手电筒", True, (120,110,90))
+            lbl = F(10).render("手电筒", True, (120,110,90))
             surface.blit(lbl, (HEALTH_BAR_X+14, HEALTH_BAR_Y-13))
 
     def _draw_inventory(self, surface):
         slot_w = INVENTORY_SLOT_SIZE
         total_w = INVENTORY_SLOTS * (slot_w + INVENTORY_PADDING) + INVENTORY_PADDING
         start_x = SCREEN_WIDTH//2 - total_w//2 + INVENTORY_PADDING
-        font_s = pygame.font.SysFont("SimHei", 10)
+        font_s = F(10)
         for i in range(INVENTORY_SLOTS):
             x = start_x + i * (slot_w + INVENTORY_PADDING)
             fname = f"slot_{i}{'_sel' if i==self.selected_slot else ''}.png"
@@ -508,7 +508,7 @@ class ItemEntity:
         surface.blit(s, (sx - glow_radius, sy - glow_radius))
         surface.blit(self.image, (sx, sy))
         # 名字
-        font = pygame.font.SysFont("SimHei", 10)
+        font = F(10)
         txt = font.render(self.item_name, True, (220,190,100))
         surface.blit(txt, (sx - 10, sy - 16))
 
@@ -554,7 +554,7 @@ class Trap:
         s.fill(col)
         surface.blit(s, (rx, ry))
         if self.triggered and self.timer < 30:
-            font = pygame.font.SysFont("SimHei", 12)
+            font = F(12)
             txt = font.render(self.hint, True, (255, 80, 80))
             surface.blit(txt, (rx, ry - 20))
 

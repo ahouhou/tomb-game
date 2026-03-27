@@ -52,8 +52,8 @@ class GameScene:
         for y in range(0, SCREEN_HEIGHT, 3):
             alpha = int(20 * (1 - abs(y - SCREEN_HEIGHT//2) / (SCREEN_HEIGHT//2)))
             pygame.draw.line(self.menu_bg, (25, 20, 15), (0, y), (SCREEN_WIDTH, y))
-        font_title = pygame.font.SysFont("SimHei", 72, bold=True)
-        font_sub = pygame.font.SysFont("SimSun", 28)
+        font_title = F(72, True)
+        font_sub = F(28)
         # 光晕
         glow = pygame.Surface((600, 300), pygame.SRCALPHA)
         for r in range(200, 0, -4):
@@ -302,7 +302,7 @@ class GameScene:
 
     def _draw_menu(self):
         self.screen.blit(self.menu_bg, (0, 0))
-        font_btn = pygame.font.SysFont("SimHei", 24)
+        font_btn = F(24)
         for btn in self.menu_buttons:
             r = btn["rect"]
             base_col = (25, 20, 14) if not btn["hover"] else (40, 32, 20)
@@ -314,7 +314,7 @@ class GameScene:
             txt = font_btn.render(btn["text"], True, COLORS["parchment"])
             self.screen.blit(txt, (r.x + r.width//2 - txt.get_width()//2, r.y + 16))
         self.particles.draw(self.screen)
-        font_tip = pygame.font.SysFont("SimHei", 13)
+        font_tip = F(13)
         tip = font_tip.render("← → 移动 | SHIFT奔跑 | E搜索 | F灯光 | CTRL蹲下 | 1-8道具栏 | ESC暂停",
                                True, (80, 65, 40))
         self.screen.blit(tip, (SCREEN_WIDTH//2 - tip.get_width()//2, SCREEN_HEIGHT - 38))
@@ -339,7 +339,7 @@ class GameScene:
             col = (30, 110, 30) if not door.get("locked") else (110, 30, 30)
             pygame.draw.rect(cam_surf, col, [dr.x, dr.y, dr.w, dr.h])
             pygame.draw.rect(cam_surf, (70, 55, 25), [dr.x, dr.y, dr.w, dr.h], 3)
-            font_d = pygame.font.SysFont("SimHei", 14)
+            font_d = F(14)
             txt = "出口" if door.get("is_exit") else ("✅" if not door.get("locked") else "🔒")
             t = font_d.render(txt, True, COLORS["parchment"])
             cam_surf.blit(t, (dr.x + dr.w//2 - t.get_width()//2, dr.y + dr.h//2 - 8))
@@ -368,7 +368,7 @@ class GameScene:
         # 消息
         if self.msg_timer > 0:
             alpha = min(255, self.msg_timer * 3)
-            font = pygame.font.SysFont("SimHei", 18)
+            font = F(18)
             txt = font.render(self.msg_text, True, self.msg_color)
             x = SCREEN_WIDTH//2 - txt.get_width()//2
             y = SCREEN_HEIGHT - 150
@@ -380,10 +380,10 @@ class GameScene:
         # 关卡信息
         if self.level:
             pygame.draw.rect(self.screen, (5,4,3,180), [10, 70, 270, 58], border_radius=8)
-            font_n = pygame.font.SysFont("SimHei", 16)
+            font_n = F(16)
             n = font_n.render(self.level["name"], True, COLORS["parchment"])
             self.screen.blit(n, (18, 75))
-            font_s = pygame.font.SysFont("SimSun", 12)
+            font_s = F(12)
             s2 = font_s.render(self.level.get("subtitle", ""), True, (150,130,100))
             self.screen.blit(s2, (18, 100))
             # 关卡进度
@@ -407,10 +407,10 @@ class GameScene:
             s = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
             s.fill((0,0,0,150))
             self.screen.blit(s, (0,0))
-            font_p = pygame.font.SysFont("SimHei", 48, bold=True)
+            font_p = F(48, True)
             t = font_p.render("已暂停", True, COLORS["gold"])
             self.screen.blit(t, (SCREEN_WIDTH//2 - t.get_width()//2, SCREEN_HEIGHT//2 - 60))
-            font_p2 = pygame.font.SysFont("SimHei", 18)
+            font_p2 = F(18)
             t2 = font_p2.render("按 ESC 或 P 继续  |  按 R 重新开始关卡", True, (150,130,100))
             self.screen.blit(t2, (SCREEN_WIDTH//2 - t2.get_width()//2, SCREEN_HEIGHT//2))
         # 关卡介绍
@@ -426,15 +426,15 @@ class GameScene:
         s = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
         s.fill((0,0,0,140))
         self.screen.blit(s, (0,0))
-        font1 = pygame.font.SysFont("SimHei", 54, bold=True)
-        font2 = pygame.font.SysFont("SimSun", 24)
+        font1 = F(54, True)
+        font2 = F(24)
         t1 = font1.render(self.level["name"], True, COLORS["gold"])
         t2 = font2.render(self.level.get("subtitle", ""), True, COLORS["parchment"])
         t1.set_alpha(alpha); t2.set_alpha(alpha)
         self.screen.blit(t1, (SCREEN_WIDTH//2 - t1.get_width()//2, SCREEN_HEIGHT//2 - 55))
         self.screen.blit(t2, (SCREEN_WIDTH//2 - t2.get_width()//2, SCREEN_HEIGHT//2 + 5))
         if self.intro_timer < 100:
-            font3 = pygame.font.SysFont("SimHei", 15)
+            font3 = F(15)
             hints = self.level.get("hints", [])
             for i, h in enumerate(hints[:2]):
                 th = font3.render(h[:60], True, (150,130,90))
@@ -444,7 +444,7 @@ class GameScene:
 
     def _draw_rules(self):
         self.screen.fill(COLORS["dark"])
-        font_title = pygame.font.SysFont("SimHei", 36, bold=True)
+        font_title = F(36, True)
         title = font_title.render("游戏说明", True, COLORS["gold"])
         self.screen.blit(title, (SCREEN_WIDTH//2 - title.get_width()//2, 28))
         rules = [
@@ -473,12 +473,12 @@ class GameScene:
             "  3.主墓室·七星续命灯  4.机关室·河图洛书",
             "  5.陪葬坑·明器鉴定    6.逃出生天·限时撤离",
         ]
-        font_body = pygame.font.SysFont("SimHei", 17)
+        font_body = F(17)
         for i, line in enumerate(rules):
             col = COLORS["gold"] if line.startswith("【") else COLORS["parchment"]
             txt = font_body.render(line, True, col)
             self.screen.blit(txt, (60, 82 + i * 24))
-        font_tip = pygame.font.SysFont("SimHei", 16)
+        font_tip = F(16)
         tip = font_tip.render("按 ESC 或 点击返回主菜单", True, (100,85,60))
         self.screen.blit(tip, (SCREEN_WIDTH//2 - tip.get_width()//2, SCREEN_HEIGHT - 40))
         for ev in pygame.event.get():
@@ -493,26 +493,26 @@ class GameScene:
             for y in range(SCREEN_HEIGHT):
                 a = int(80 * (y / SCREEN_HEIGHT))
                 pygame.draw.line(self.screen, (80,0,0), (0,y), (SCREEN_WIDTH,y))
-            font = pygame.font.SysFont("SimHei", 64, bold=True)
+            font = F(64, True)
             txt = font.render("你死了", True, COLORS["blood_red"])
             self.screen.blit(txt, (SCREEN_WIDTH//2 - txt.get_width()//2, SCREEN_HEIGHT//2 - 80))
-            font2 = pygame.font.SysFont("SimHei", 22)
+            font2 = F(22)
             sub = font2.render("墓室中的危险夺去了你的生命...", True, (150,120,100))
             self.screen.blit(sub, (SCREEN_WIDTH//2 - sub.get_width()//2, SCREEN_HEIGHT//2 - 20))
-            font3 = pygame.font.SysFont("SimHei", 18)
+            font3 = F(18)
             tip = font3.render("点击任意处重新开始", True, (100,80,60))
             self.screen.blit(tip, (SCREEN_WIDTH//2 - tip.get_width()//2, SCREEN_HEIGHT//2 + 50))
         elif self.state == "victory":
             for y in range(SCREEN_HEIGHT):
                 a = int(40 * (1 - abs(y - SCREEN_HEIGHT//2) / (SCREEN_HEIGHT//2)))
                 pygame.draw.line(self.screen, (30,25,10), (0,y), (SCREEN_WIDTH,y))
-            font = pygame.font.SysFont("SimHei", 60, bold=True)
+            font = F(60, True)
             txt = font.render("逃出生天！", True, COLORS["gold"])
             self.screen.blit(txt, (SCREEN_WIDTH//2 - txt.get_width()//2, SCREEN_HEIGHT//2 - 80))
-            font2 = pygame.font.SysFont("SimHei", 22)
+            font2 = F(22)
             sub = font2.render("活着真好，阳光洒在脸上的感觉真好。", True, COLORS["parchment"])
             self.screen.blit(sub, (SCREEN_WIDTH//2 - sub.get_width()//2, SCREEN_HEIGHT//2 - 20))
-            font3 = pygame.font.SysFont("SimHei", 18)
+            font3 = F(18)
             tip = font3.render("恭喜完成《盗墓笔记》探墓之旅！", True, (150,130,80))
             self.screen.blit(tip, (SCREEN_WIDTH//2 - tip.get_width()//2, SCREEN_HEIGHT//2 + 40))
             tip2 = font3.render("点击任意处返回主菜单", True, (100,85,60))
